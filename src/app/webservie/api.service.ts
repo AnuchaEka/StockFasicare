@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable,throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {
   LoadingController,
   ToastController,
  } from '@ionic/angular';
 
-// const httpOptions = {
-//   headers: new HttpHeaders({'Content-Type': 'application/json'})
-// };
+const httpOptions = {
+  headers: new HttpHeaders()
+};
 const apiUrl = "http://phpstack-201718-795798.cloudwaysapps.com/api/";
 
 
@@ -48,21 +48,21 @@ export class ApiService {
 
 
   getData(type): Observable<any> {
-    return this.http.get(apiUrl+type).pipe(
+    return this.http.get(apiUrl+type,httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));
   }
   
   getDataById(id: string): Observable<any> {
     const url = `${apiUrl}${id}`;
-    return this.http.get(url).pipe(
+    return this.http.get(url,httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError));
   }
   
   postData(data,func): Observable<any> {
     const url = `${apiUrl}${func}`;
-    return this.http.post(url, JSON.stringify(data))
+    return this.http.post(url, JSON.stringify(data),httpOptions)
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
@@ -71,7 +71,7 @@ export class ApiService {
   
   updateData(id: string, data): Observable<any> {
     const url = `${apiUrl}${id}`;
-    return this.http.put(url, data)
+    return this.http.put(url, data,httpOptions)
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
@@ -80,7 +80,7 @@ export class ApiService {
   
   deleteData(id: string): Observable<{}> {
     const url = `${apiUrl}${id}`;
-    return this.http.delete(url)
+    return this.http.delete(url,httpOptions)
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
@@ -107,7 +107,7 @@ export class ApiService {
   async  presentToast(msg) {
     const toast = await  this.toastCtrl.create({
       message: msg,
-      duration: 2000
+      duration: 3000
     });
     toast.present();
   }

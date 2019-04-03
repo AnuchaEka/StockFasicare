@@ -1,5 +1,7 @@
 {
   "name": "StockFasicare",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
