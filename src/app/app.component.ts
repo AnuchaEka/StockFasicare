@@ -1,31 +1,37 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   public appPages = [
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      direct: 'root',
     },
     {
       title: 'List',
       url: '/list',
-      icon: 'list'
+      icon: 'list',
+      direct: 'forward',
     }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public navCtrl: NavController,
+    public  storage :Storage
   ) {
     this.initializeApp();
   }
@@ -36,4 +42,18 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+  goToEditProgile() {
+    this.navCtrl.navigateForward('edit-profile');
+  }
+
+  logout() {
+
+    this.storage.clear();
+    sessionStorage.clear();
+
+    this.navCtrl.navigateRoot('/');
+  }
+
+
 }

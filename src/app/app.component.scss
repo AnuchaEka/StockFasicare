@@ -1,0 +1,11 @@
+:host {
+    ion-content {
+        --background: linear-gradient(135deg, var(--ion-color-tertiary), var(--ion-color-tertiary));
+    }
+
+    ion-list {
+        &.list-md {
+            padding: 0;
+        }
+    }
+}

@@ -1,0 +1,61 @@
+<ion-content padding class="animated fadeIn login auth-page">
+  <div class="theme-bg"></div>
+  <div class="auth-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logo"></div>
+      <!-- <h4 no-margin>
+        <ion-text color="light" class="fw700">
+          Ionic 4 Start Theme
+        </ion-text>
+      </h4> -->
+    </div>
+
+    <!-- Login form -->
+    <form [formGroup]="onLoginForm" class="list-form">
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="mail" item-start></ion-icon>
+          ชื่อผู้ใช้งาน
+        </ion-label>
+        <ion-input color="secondary" type="text" formControlName="u_username"></ion-input>
+      </ion-item>
+      <p ion-text class="text08" *ngIf="onLoginForm.get('u_username').touched && onLoginForm.get('u_username').hasError('required')">
+        <ion-text color="danger">
+          กรุณากรอกชื่อผู้ใช้งานด้วยค่ะ
+        </ion-text>
+      </p>
+
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="lock" item-start></ion-icon>
+          รหัสผ่าน
+        </ion-label>
+        <ion-input color="secondary" type="password" formControlName="u_password"></ion-input>
+      </ion-item>
+      <p ion-text color="warning" class="text08" *ngIf="onLoginForm.get('u_password').touched && onLoginForm.get('u_password').hasError('required')">
+        <ion-text color="danger">
+          กรุณากรอกรหัสผ่านด้วยค่ะ
+        </ion-text>
+        </p>
+    </form>
+
+    <!-- <p text-right tappable (click)="forgotPass()" class="paz">
+      <ion-text color="primary">
+        <strong>ลืมรหัสผ่าน?</strong>
+      </ion-text>
+    </p> -->
+
+    <div>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="primary" (click)="login()" [disabled]="!onLoginForm.valid" tappable>
+        <ion-icon name="log-in"></ion-icon>
+        เข้าสู่ระบบ
+      </ion-button>
+
+
+    </div>
+
+ 
+  </div>
+</ion-content>
