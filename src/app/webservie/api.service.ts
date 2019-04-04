@@ -3,6 +3,8 @@ import { Storage } from '@ionic/storage';
 import { Observable,throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+
 import {
   LoadingController,
   ToastController,
@@ -19,12 +21,20 @@ const apiUrl = "http://phpstack-201718-795798.cloudwaysapps.com/api/";
 })
 export class ApiService {
 
+  private currentUserSub = new BehaviorSubject<any>(null);
+ 
+
   constructor(
     private http: HttpClient,
     public loadingCtrl: LoadingController,
     private storage :Storage,
-    public toastCtrl:ToastController
-  ) { }
+    public toastCtrl:ToastController,
+  ) { 
+
+    const user = JSON.parse(localStorage.getItem('userData'));
+    this.currentUserSub.next(user);
+
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -66,6 +76,7 @@ export class ApiService {
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
+        
       );
   }
   
@@ -96,7 +107,7 @@ export class ApiService {
 
   public getAuthen(callback)
   {
-    this.storage.get("userObj").then(obj=>{
+    this.storage.get("userData").then(obj=>{
       if(callback)
       {
         callback(obj);
@@ -110,6 +121,15 @@ export class ApiService {
       duration: 3000
     });
     toast.present();
+  }
+
+  
+
+ 
+  getStore(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('userData'));
+    this.currentUserSub.next(user);
+    return this.currentUserSub;
   }
 
 }

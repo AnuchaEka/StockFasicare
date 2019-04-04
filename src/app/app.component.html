@@ -2,27 +2,27 @@
   <ion-split-pane>
     <ion-menu>
       <ion-header>
-        <ion-toolbar color="primary" class="user-profile">
+        <ion-toolbar color="primary" class="user-profile" *ngIf="userProfile" >
 
           <ion-item margin-bottom>
-            <ion-avatar slot="start" class="user-avatar">
-              <img src="assets/img/avatar.jpeg">
+            <ion-avatar slot="start" class="user-avatar" *ngIf="img">
+              <img src="{{img}}">
             </ion-avatar>
             <ion-label>
               <ion-text color="light">
-                <h1><strong>João Firmino</strong></h1>
+                <h1 ><strong>{{userProfile.u_name}} {{userProfile.u_lastname}}</strong></h1>
               </ion-text>
               <ion-menu-toggle class="mto" auto-hide="false">
                 <a class="text08" tappable (click)="goToEditProgile()">
                   <ion-text color="light">
                     <ion-icon name="contact"></ion-icon>
-                    <strong>แก้ไขข้อมูล</strong>
+                    <strong> แก้ไขข้อมูล</strong>
                   </ion-text>
                 </a> <ion-text color="primary"> | </ion-text> 
                 <a class="text08" tappable (click)="logout()">
                   <ion-text color="light">
                     <ion-icon name="log-out"></ion-icon>
-                    <strong>ออกจากระบบ</strong>
+                    <strong> ออกจากระบบ</strong>
                   </ion-text>
                 </a>
               </ion-menu-toggle>
@@ -39,14 +39,28 @@
           </ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerLink]="[p.url]" color="primary">
-              <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
+            <ion-item [routerLink]="[p.url]" color="primary" class="menus">
+              <ion-icon slot="start" [name]="p.icon" color="light" item-start></ion-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+
+        <div class="center">
+            <ion-row justify-content> 
+                <ion-col size="12" >
+                  <img src="assets/img/logo.png" width="135">
+                </ion-col>
+                
+              </ion-row>
+              <p>
+                  <ion-label color="light">เวอร์ชัน {{version}}</ion-label>
+              </p>
+              
+              <ion-label color="light">© สงวนลิขสิทธิ์ 2019 บริษัท ฟาซิแคร์ จำกัด</ion-label>
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>

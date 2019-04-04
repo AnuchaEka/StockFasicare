@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, MenuController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { ApiService } from '../../webservie/api.service';
 import { Router } from  "@angular/router";
+import { AuthenticationService } from './../../services/authentication.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,11 +22,12 @@ export class LoginPage implements OnInit {
     public loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
     private api:ApiService,
+    private authService: AuthenticationService,
     private router :Router
   ) { 
 
-    const res = JSON.parse(localStorage.getItem("userData"));
-    this.resuser =res.data;
+    // const res = JSON.parse(localStorage.getItem("userData"));
+    // this.resuser =res.data;
    // console.log(this.resuser.u_id);
     
   }
@@ -114,8 +117,10 @@ export class LoginPage implements OnInit {
         //let id = res['status'];
         if(res.status==1){
 
-          localStorage.setItem('userData',JSON.stringify(res))
-          //this.router.navigateByUrl('home');
+         // localStorage.setItem('userData',JSON.stringify(res))
+          this.authService.login(res);
+          this.router.navigate(['home']);
+          
           //this.api.presentToast('เข้าสู่ระบบสำเร็จ');
         }else{
           this.api.presentToast('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');

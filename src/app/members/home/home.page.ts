@@ -14,7 +14,10 @@ import {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
+  userProfile;
   resdata: any;
+  
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -22,15 +25,21 @@ export class HomePage implements OnInit {
     public toastCtrl: ToastController,
     public api: ApiService, 
     public loadingController: LoadingController
-  ) { }
+  ) { 
+
+   
+
+  }
 
   ngOnInit() {
-    this.getData();
+    //this.getUserDetails();
   }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
+
+  
 
 
   async getData() {
@@ -44,13 +53,21 @@ export class HomePage implements OnInit {
     await loading.present();
     await this.api.getData('getShop')
       .subscribe(res => {
-        console.log(res);
+        //console.log(res);
         this.resdata = res;
         loading.dismiss();
       }, err => {
-        console.log(err);
+        //console.log(err);
         loading.dismiss();
       });
+  }
+
+  getUserDetails() {
+    this.api.getStore().subscribe(res => {
+      this.userProfile = res.data;
+      console.log(this.userProfile);
+      
+    });
   }
 
 }
