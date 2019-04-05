@@ -35,6 +35,7 @@ export class AuthenticationService {
  
   logout() {
     return this.storage.remove(TOKEN_KEY).then(() => {
+      localStorage.clear();
       this.authenticationState.next(null);
     });
   }

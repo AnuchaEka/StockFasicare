@@ -14,8 +14,8 @@
   <ion-content padding class="form-content">
       <ion-card no-margin>
         <ion-card-content class="center">
-          <div class="avatar">
-              <img src="assets/img/avatar.jpeg">
+          <div class="avatar" *ngIf="img">
+              <img src="{{img}}">
            </div> 
           <ion-button icon-left color="secondary">
             <ion-icon name="create"></ion-icon> 

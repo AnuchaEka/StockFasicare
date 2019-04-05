@@ -112,12 +112,12 @@ export class LoginPage implements OnInit {
     let password = this.onLoginForm.value.u_password;
 
 
-    await this.api.postData({'u_username':username,'u_password':password},'login')
+    await this.api.postData({'u_username':username,'u_password':password},'account/login')
     .subscribe(res => {
         //let id = res['status'];
         if(res.status==1){
 
-          //localStorage.setItem('userData',JSON.stringify(res))
+          localStorage.setItem('userData',JSON.stringify(res))
           this.authService.login(res);
           this.router.navigate(['home']);
           

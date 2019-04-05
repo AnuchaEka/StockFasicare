@@ -67,7 +67,7 @@ export class DashboardPage implements OnInit {
   }
 
     async  changpassword(id){
-    this.router.navigate(['editprofile/'+id]);
+    this.router.navigate(['changpassword/'+id]);
   }
   
 

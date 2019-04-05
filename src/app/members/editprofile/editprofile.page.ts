@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, MenuController, LoadingController } from '@ionic/angular';
-import { Router } from  "@angular/router";
+import { Router,ActivatedRoute, } from  "@angular/router";
+import { AuthenticationService } from '../../services/authentication.service';
+import { ApiService } from '../../webservie/api.service';
 
 @Component({
   selector: 'app-editprofile',
@@ -11,32 +13,44 @@ import { Router } from  "@angular/router";
 export class EditprofilePage implements OnInit {
 
   validations_form: FormGroup;
+  userProfile;
+  img;
+  res;
 
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     public loadingCtrl: LoadingController,
     private formBuilder: FormBuilder,
-    private router :Router  
-  ) { }
+    private authen :AuthenticationService,
+    private router :Router  ,
+    private api :ApiService,
+    private route: ActivatedRoute,
+  ) { 
+
+    this.userProfile =this.api.getStore();
+
+    this.res = this.userProfile.data;
+    this.img=this.userProfile.img;
+  }
 
   ngOnInit() {
     
 
     this.validations_form = this.formBuilder.group({
 
-      username: new FormControl('sss', Validators.compose([
+      username: new FormControl(this.res.u_username, Validators.compose([
         Validators.pattern('^[a-zA-Z0-9]+$'),
         Validators.required
       ])),
       
-      name: new FormControl('sss', Validators.required),
-      lastname: new FormControl('sss', Validators.required),
-      email: new FormControl('kead@gmai.com', Validators.compose([
+      name: new FormControl(this.res.u_name, Validators.required),
+      lastname: new FormControl(this.res.u_lastname, Validators.required),
+      email: new FormControl(this.res.u_email, Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      phone: new FormControl('0909', Validators.compose([
+      phone: new FormControl(this.res.u_tel, Validators.compose([
         Validators.pattern('^[0-9]+$')
       ])),
 
@@ -66,21 +80,33 @@ export class EditprofilePage implements OnInit {
 
   }
 
-  onSubmit(values){
-    console.log(values);
-    //this.router.navigate(["/dashboard"]);
+  async onSubmit(values){
+    //console.log(values);
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+      spinner: 'crescent',
+      duration: 2000
+      });
+      await loading.present();
+      await this.api.updateData('account/updateprofile',this.route.snapshot.paramMap.get('id'),values)
+      .subscribe(res => {
+       
+        loading.onWillDismiss().then(() => {
+          this.api.presentToast(res.message);
+          localStorage.setItem('userData',JSON.stringify(res))
+          this.authen.login(res);
+          this.router.navigate(['dashboard']);
+          
+           });
+      
+        }, (err) => {
+
+          this.api.presentToast('ไม่พบสัญญาณ internet หรือไม่สามารถติดต่อ server ได้');
+
+        });
+
+  
 }
 
-
-  // async save() {
-  //   const loader = await this.loadingCtrl.create({
-  //     duration: 2000
-  //   });
-
-  //   loader.present();
-  //   loader.onWillDismiss().then(() => {
-  //     //this.navCtrl.navigateRoot('/home-results');
-  //   });
-  // }
 
 }

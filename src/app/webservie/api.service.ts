@@ -13,7 +13,7 @@ import {
 const httpOptions = {
   headers: new HttpHeaders()
 };
-const apiUrl = "http://phpstack-201718-795798.cloudwaysapps.com/api/";
+const apiUrl = "http://phpstack-201718-795798.cloudwaysapps.com/api_app/";
 
 
 @Injectable({
@@ -80,9 +80,9 @@ export class ApiService {
       );
   }
   
-  updateData(id: string, data): Observable<any> {
-    const url = `${apiUrl}${id}`;
-    return this.http.put(url, data,httpOptions)
+  updateData(func,id: string, data): Observable<any> {
+    const url = `${apiUrl}${func}/${id}`;
+    return this.http.post(url,JSON.stringify(data),httpOptions)
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
@@ -118,6 +118,7 @@ export class ApiService {
   async  presentToast(msg) {
     const toast = await  this.toastCtrl.create({
       message: msg,
+      color: 'dark',
       duration: 3000
     });
     toast.present();
@@ -128,8 +129,9 @@ export class ApiService {
  
   getStore(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('userData'));
-    this.currentUserSub.next(user);
-    return this.currentUserSub;
+    //this.currentUserSub.next(user);
+    //return this.currentUserSub;
+    return user;
   }
 
 }
