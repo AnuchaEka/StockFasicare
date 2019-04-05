@@ -117,7 +117,7 @@ export class LoginPage implements OnInit {
         //let id = res['status'];
         if(res.status==1){
 
-         // localStorage.setItem('userData',JSON.stringify(res))
+          //localStorage.setItem('userData',JSON.stringify(res))
           this.authService.login(res);
           this.router.navigate(['home']);
           

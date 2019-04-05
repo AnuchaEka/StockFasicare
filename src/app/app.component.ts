@@ -114,16 +114,14 @@ export class AppComponent {
 
       this.authenticationService.authenticationState.subscribe(state => {
 
-        // this.status = state.data;
-         console.log(state);
-        if (state!=null) {
+         if (state!=null) {
           this.userProfile=state.data;  
           this.img=state.img;
-          //console.log(this.userProfile);
-         
-          this.router.navigate(['/home']);
+            
+          //this.router.navigate(['/home']);
+
          }else{
-          this.router.navigate(['/login']);
+          //this.router.navigate(['/login']);
          }
       });
 
@@ -163,7 +161,7 @@ export class AppComponent {
 
   goToEditProgile(){
 
-    this.router.navigate(['members','dashboard']);
+    this.router.navigate(['dashboard']);
   }
 
 }

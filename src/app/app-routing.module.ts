@@ -7,12 +7,9 @@ const routes: Routes = [
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login',  loadChildren: './pages/login/login.module#LoginPageModule'   },
   { path: 'home',  loadChildren: './members/home/home.module#HomePageModule'   },
-   
-  { 
-    path: 'members', 
-   // canActivate: [AuthGuardService],
-    loadChildren: './members/member-routing.module#MemberRoutingModule'
-  },
+  { path: 'editprofile/:id', loadChildren: './members/editprofile/editprofile.module#EditprofilePageModule' },
+  { path: 'dashboard', loadChildren: './members/dashboard/dashboard.module#DashboardPageModule' }, 
+  
 ];
 
 @NgModule({

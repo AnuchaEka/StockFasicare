@@ -1,9 +1,78 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button color="light"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+          <ion-text color="light">
+            <ion-text color="light" class="fw700">ข้อมูลของฉัน</ion-text>
+          </ion-text>
+      </ion-title>
+      <!-- <ion-buttons slot="end">
+        <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+          <ion-icon name="notifications"></ion-icon>
+          <ion-badge color="dark" slot="end">2</ion-badge>
+        </ion-button>
+      </ion-buttons> -->
+    </ion-toolbar>
+    <!-- <ion-toolbar color="dark">
+      <ion-searchbar [(ngModel)]="searchKey"></ion-searchbar>
+      <ion-buttons slot="end">
+        <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
+          <ion-icon name="options"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar> -->
+  </ion-header>
+  
+  <ion-content>
+      <ion-card class="cards-list-demo center" >
+           <div class="avatar" *ngIf="img">
+              <img src="{{img}}">
+           </div>  
+           <div *ngIf="userProfile">
+              <p>
+                  <ion-label ><strong class="f-18">{{userProfile.u_name}} {{userProfile.u_lastname}}</strong></ion-label><br>
+                  
+                   <ion-label>{{userProfile.u_email}}</ion-label>
+                  </p>
+           </div>
+          
+       
+            
+            <ion-item lines="none" (click)="editprofile(userProfile.u_id)">
+                <ion-label>
+                    แก้ไขข้อมูลส่วนตัว
+                </ion-label>
+                <ion-icon name="md-create"  slot="end"></ion-icon>
+     
+              </ion-item>
 
-<ion-content>
+            <ion-item lines="none" (click)="changpassword(userProfile.u_id)">
+                <ion-label>
+                  เปลี่ยนรหัสผ่าน
+                </ion-label>
+                <ion-icon name="md-key"  slot="end"></ion-icon>
+     
+              </ion-item>
 
-</ion-content>
+              <ion-item lines="none" (click)="logout()">
+                  <ion-label>
+                    ออกจากระบบ
+                  </ion-label>
+                  <ion-icon name="md-exit"  slot="end"></ion-icon>
+       
+                </ion-item>
+
+
+
+
+        </ion-card>
+              
+         
+        
+          
+          
+    
+  </ion-content>
+    

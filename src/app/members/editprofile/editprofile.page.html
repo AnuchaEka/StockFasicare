@@ -1,0 +1,105 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button id="backButton" defaultHref="/dashboard" text="ย้อนกลับ"></ion-back-button>
+
+          </ion-buttons>
+      <ion-title>
+       แก้ไขข้อมูลส่วนตัว
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+
+  <ion-content padding class="form-content">
+      <ion-card no-margin>
+        <ion-card-content class="center">
+          <div class="avatar">
+              <img src="assets/img/avatar.jpeg">
+           </div> 
+          <ion-button icon-left color="secondary">
+            <ion-icon name="create"></ion-icon> 
+            แก้ไขรูปโปรไฟล์
+          </ion-button>
+        </ion-card-content>
+        <form [formGroup]="validations_form"  (ngSubmit)="onSubmit(validations_form.value)">
+          <ion-item>
+            <ion-label position="floating" color="primary">ชื่อผู้ใช้งาน</ion-label>
+            <ion-input type="text" formControlName="username" ></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.username">
+              <div class="error-message" *ngIf="validations_form.get('username').hasError(validation.type) && (validations_form.get('username').dirty || validations_form.get('username').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+      
+          <ion-item>
+            <ion-label position="floating" color="primary">ชื่อ</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+      
+          <ion-item>
+            <ion-label position="floating" color="primary">นามสกุล</ion-label>
+            <ion-input type="text" formControlName="lastname"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.lastname">
+              <div class="error-message" *ngIf="validations_form.get('lastname').hasError(validation.type) && (validations_form.get('lastname').dirty || validations_form.get('lastname').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+      
+          <ion-item>
+            <ion-label position="floating" color="primary">อีเมล</ion-label>
+            <ion-input type="text" formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+      
+          <ion-item>
+            <ion-label position="floating" color="primary">เบอร์โทรศัพท์</ion-label>
+            <ion-input type="text" formControlName="phone"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.phone">
+              <div class="error-message" *ngIf="validations_form.get('phone').hasError(validation.type) && (validations_form.get('phone').dirty || validations_form.get('phone').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+      
+        
+      
+      <ion-button color="primary" class="submit-btn" expand="full" type="submit" [disabled]="!validations_form.valid" tappable>
+        <ion-icon name="md-create"></ion-icon>
+        อัพเดตข้อมูล
+
+      </ion-button>
+      </form>
+
+     
+      <!-- <ion-button icon-left size="medium" expand="full" shape="round" color="primary" (click)="save()" [disabled]="!editProfileForm.valid" tappable>
+        <ion-icon name="md-create"></ion-icon>
+        อัพเดตข้อมูล
+      </ion-button> -->
+       
+      </ion-card>
+  
+    </ion-content>
+    
